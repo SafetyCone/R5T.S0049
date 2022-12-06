@@ -12,6 +12,101 @@ namespace R5T.S0049
 	[FunctionalityMarker]
 	public partial interface IRepositoryScripts : IFunctionalityMarker
 	{
+        public async Task DeleteRepository_SpecifyLocalDirectory()
+        {
+            /// Inputs
+            var owner =
+                //GitHubOwners.Instance.DavidCoats
+                GitHubOwners.Instance.SafetyCone
+                ;
+            var name = "R5T.Example";
+            var isPrivate = false;
+            var repositoriesDirectoryPath =
+                DirectoryPaths.Instance.TemporaryRepositoriesPath
+                ;
+
+
+            /// Run.
+            var localRepositoryDirectoryPath = F0057.RepositoryDirectoryPathOperator.Instance.GetRepositoryDirectoryPath_FromRepositoriesDirectoryPath(
+                repositoriesDirectoryPath,
+                name);
+
+            await Instances.RepositoryOperations.DeleteRepository(
+                owner,
+                name,
+                isPrivate,
+                localRepositoryDirectoryPath);
+        }
+
+        public async Task CreateRepository()
+        {
+            // Inputs
+            var owner =
+                //GitHubOwners.Instance.DavidCoats
+                GitHubOwners.Instance.SafetyCone
+                ;
+            var name = "R5T.Example";
+            var description = "An example repository.";
+            var isPrivate = true;
+
+
+            /// Run.
+            var repositoryContext = F0089.RepositoryContextOperations.Instance.GetRepositoryContext(
+                owner,
+                name,
+                description,
+                isPrivate);
+
+            var remoteRepsitoryUrl = await Instances.RepositoryOperations.CreateRepository(
+                repositoryContext);
+
+            /// Show outputs.
+            Instances.WindowsExplorerOperator.OpenDirectoryInExplorer(
+                repositoryContext.LocalDirectoryPath);
+
+            Instances.WebOperator.OpenUrlInDefaultBrowser(
+                remoteRepsitoryUrl);
+        }
+
+        public async Task CreateRepository_SpecifyLocalDirectory()
+        {
+            /// Inputs
+            var owner =
+                //GitHubOwners.Instance.DavidCoats
+                GitHubOwners.Instance.SafetyCone
+                ;
+            var name = "R5T.Example";
+            var description = "An example repository.";
+            var isPrivate = true;
+            var repositoriesDirectoryPath =
+                DirectoryPaths.Instance.TemporaryRepositoriesPath
+                ;
+
+
+            /// Run.
+            var repositoryNameContext = F0089.RepositoryContextOperations.Instance.GetRepositoryContext(
+                name,
+                isPrivate);
+
+            var localRepositoryDirectoryPath = F0057.RepositoryDirectoryPathOperator.Instance.GetRepositoryDirectoryPath_FromRepositoriesDirectoryPath(
+                repositoriesDirectoryPath,
+                repositoryNameContext.PrivacyAdjustedRepositoryName);
+
+            var repositoryContext = await Instances.RepositoryOperations.CreateRepository(
+                owner,
+                repositoryNameContext.PrivacyAdjustedRepositoryName,
+                description,
+                isPrivate,
+                localRepositoryDirectoryPath);
+
+            /// Show outputs.
+            Instances.WindowsExplorerOperator.OpenDirectoryInExplorer(
+                localRepositoryDirectoryPath);
+
+            Instances.WebOperator.OpenUrlInDefaultBrowser(
+                repositoryContext.RemoteUrl);
+        }
+
         /// <summary>
         /// Non-idempotently clones a remote GitHub repository to a local repository directory.
         /// (Will error if the repository already exists.)
