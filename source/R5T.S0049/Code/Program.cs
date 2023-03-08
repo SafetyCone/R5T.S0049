@@ -19,7 +19,7 @@ namespace R5T.S0049
             //RepositoryScripts.Instance.DeleteLocal();
 
             /// Joint.
-            await RepositoryScripts.Instance.CreateRepository_SpecifyLocalDirectory();
+            //await RepositoryScripts.Instance.CreateRepository_SpecifyLocalDirectory();
             await RepositoryScripts.Instance.DeleteRepository_SpecifyLocalDirectory();
         }
     }

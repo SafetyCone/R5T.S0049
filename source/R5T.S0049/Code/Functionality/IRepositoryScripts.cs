@@ -19,10 +19,11 @@ namespace R5T.S0049
                 //GitHubOwners.Instance.DavidCoats
                 GitHubOwners.Instance.SafetyCone
                 ;
-            var name = "R5T.Example";
+            var name = "R5T.Testing.S0030";
             var isPrivate = false;
             var repositoriesDirectoryPath =
-                DirectoryPaths.Instance.TemporaryRepositoriesPath
+                //DirectoryPaths.Instance.TemporaryRepositoriesPath
+                @"C:\Code\DEV\Git\GitHub\SafetyCone\"
                 ;
 
 
@@ -202,7 +203,7 @@ namespace R5T.S0049
                 //GitHubOwners.Instance.DavidCoats
                 GitHubOwners.Instance.SafetyCone
                 ;
-            var name = "R5T.S0051";
+            var name = "R5T.Testing2";
             var isPrivate = true;
 
 
